@@ -89,13 +89,7 @@ const getRandomPositiveFloat = (min, max, digits) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-const getRandomArray = (arr) => {
-  const randomArrayLength = getRandomPositiveInteger(1, arr.length);
-
-  for (let index = 0; index <= randomArrayLength; index++) {
-    return arr.slice(0, getRandomPositiveInteger(1, arr.length));
-  }
-};
+const getRandomArray = (arr) => arr.slice(0, getRandomPositiveInteger(1, arr.length));
 
 const createOffer = () => ({
   author: {
@@ -116,10 +110,11 @@ const createOffer = () => ({
   photos: getRandomArray(PHOTOS),
   location: {
     lat: getRandomPositiveFloat(LATITUDE_MIN, LATITUDE_MAX, 5),
-    lng: getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX,5),
+    lng: getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX, 5),
   },
 });
 
 const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
 
 similarOffers;
+
