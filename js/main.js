@@ -1,4 +1,4 @@
-const TITLES = [
+const TITLE = [
   'Промокод при бронировании',
   'Скидка -25%',
   'Дополнительное место включено',
@@ -9,7 +9,7 @@ const PRICE_OFFER_MIN = 500;
 
 const PRICE_OFFER_MAX = 15000;
 
-const TYPES = [
+const TYPE = [
   'palace',
   'flat',
   'house',
@@ -25,13 +25,13 @@ const NUMBER_OF_GUESTS_MIN = 1;
 
 const NUMBER_OF_GUESTS_MAX = 8;
 
-const CHECKINS = [
+const CHECKIN = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-const CHECKOUTS = [
+const CHECKOUT = [
   '12:00',
   '13:00',
   '14:00',
@@ -46,7 +46,7 @@ const FEATURES = [
   'conditioner',
 ];
 
-const DESCRIPTIONS = [
+const DESCRIPTION = [
   'ковровое покрытие',
   'звуко-изолированные двери',
   'кровати с ортопедическими матрасами',
@@ -61,13 +61,13 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const LATITUDE_MIN = 35.65000;
+const LATITUDE_MIN = 35.65;
 
-const LATITUDE_MAX = 35.70000;
+const LATITUDE_MAX = 35.70;
 
-const LONGITUDE_MIN = 139.70000;
+const LONGITUDE_MIN = 139.70;
 
-const LONGITUDE_MAX = 139.80000;
+const LONGITUDE_MAX = 139.80;
 
 const SIMILAR_OFFER_COUNT = 10;
 
@@ -89,36 +89,37 @@ const getRandomPositiveFloat = (min, max, digits) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-const getRandomArray = (arr) => arr.slice(0, getRandomPositiveInteger(1, arr.length));
+const getRandomArray = (arr) => {
+  const randomArrayLength = getRandomPositiveInteger(1, arr.length);
 
-const ADDRESS_LATITUDE = getRandomPositiveFloat(LATITUDE_MIN, LATITUDE_MAX, 5);
-
-const ADDRESS_LONGITUDE = getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX, 5);
+  for (let index = 0; index <= randomArrayLength; index++) {
+    return arr.slice(0, getRandomPositiveInteger(1, arr.length));
+  }
+};
 
 const createOffer = () => ({
   author: {
     avatar: `img/avatars/user0${getRandomPositiveInteger(1, 8)}.png`,
   },
   offer: {
-    title: getRandomArrayElement(TITLES),
-    address: `${ADDRESS_LATITUDE}, ${ADDRESS_LATITUDE}`,
+    title: getRandomArrayElement(TITLE),
+    address: `${getRandomPositiveFloat(LATITUDE_MIN, LATITUDE_MAX, 5)}, ${getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX, 5)}`,
     price: getRandomPositiveInteger(PRICE_OFFER_MIN, PRICE_OFFER_MAX),
   },
-  type: getRandomArrayElement(TYPES),
+  type: getRandomArrayElement(TYPE),
   rooms: getRandomPositiveInteger(NUMBER_OF_ROOMS_MIN, NUMBER_OF_ROOMS_MAX),
   guests: getRandomPositiveInteger(NUMBER_OF_GUESTS_MIN, NUMBER_OF_GUESTS_MAX),
-  checkin: getRandomArrayElement(CHECKINS),
-  checkout: getRandomArrayElement(CHECKOUTS),
+  checkin: getRandomArrayElement(CHECKIN),
+  checkout: getRandomArrayElement(CHECKOUT),
   features: getRandomArray(FEATURES),
-  description: getRandomArray(DESCRIPTIONS),
+  description: getRandomArray(DESCRIPTION),
   photos: getRandomArray(PHOTOS),
   location: {
-    lat: ADDRESS_LATITUDE,
-    lng: ADDRESS_LONGITUDE,
+    lat: getRandomPositiveFloat(LATITUDE_MIN, LATITUDE_MAX, 5),
+    lng: getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX,5),
   },
 });
 
 const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
 
 similarOffers;
-
