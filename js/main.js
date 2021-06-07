@@ -1,25 +1,130 @@
-function getRandomNumber(min, max) {
-  if (max <= min) {
-    return 'Значение max не может быть меньше, чем значение min, или равное ему';
-  }
-  if (min < 0 || max < 0) {
-    return 'Значение min и max не могут быть отрицательными';
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются, источник developer.mozilla.org
-}
+const TITLES = [
+  'Промокод при бронировании',
+  'Скидка -25%',
+  'Дополнительное место включено',
+  'Доступно для заселения с животными',
+];
 
+const PRICE_OFFER_MIN = 500;
 
-function getRandomFractionalNumber(min, max, num) {
-  if (max <= min) {
-    return 'Значение max не может быть меньше, чем значение min, или равное ему';
-  }
-  if (min < 0 || max < 0) {
-    return 'Значение min и max не могут быть отрицательными';
-  }
-  const randomNumber = Math.random() * (max - min + 1) + min;
-  return Number(randomNumber.toFixed(num));
-}
+const PRICE_OFFER_MAX = 15000;
 
-getRandomNumber(7, 90);
-getRandomFractionalNumber(42, 89.675, 4);
+const TYPES = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel',
+];
+
+const NUMBER_OF_ROOMS_MIN = 1;
+
+const NUMBER_OF_ROOMS_MAX = 10;
+
+const NUMBER_OF_GUESTS_MIN = 1;
+
+const NUMBER_OF_GUESTS_MAX = 8;
+
+const CHECKINS = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
+
+const CHECKOUTS = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
+
+const FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner',
+];
+
+const DESCRIPTIONS = [
+  'ковровое покрытие',
+  'звуко-изолированные двери',
+  'кровати с ортопедическими матрасами',
+  'индивидуальные лампы для чтения',
+  'индивидуальные шкафчики',
+  'для вещей',
+];
+
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+
+const LATITUDE_MIN = 35.65000;
+
+const LATITUDE_MAX = 35.70000;
+
+const LONGITUDE_MIN = 139.70000;
+
+const LONGITUDE_MAX = 139.80000;
+
+const SIMILAR_OFFER_COUNT = 10;
+
+const getRandomPositiveInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+};
+
+const getRandomPositiveFloat = (min, max, digits) => {
+  const lower = Math.min(Math.abs(min), Math.abs(max));
+  const upper = Math.max(Math.abs(min), Math.abs(max));
+  const result = Math.random() * (upper - lower) + lower;
+
+  return result.toFixed(digits);
+};
+
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+
+const getRandomArray = (arr) => {
+  const randomArrayLength = getRandomPositiveInteger(1, arr.length);
+
+  for (let index = 0; index <= randomArrayLength; index++) {
+    return arr.slice(0, getRandomPositiveInteger(1, arr.length));
+  }
+};
+
+const LATITUDE = getRandomPositiveFloat(LATITUDE_MIN, LATITUDE_MAX, 5);
+
+const LONGITUDE = getRandomPositiveFloat(LONGITUDE_MIN, LONGITUDE_MAX, 5);
+
+const createOffer = () => ({
+  author: {
+    avatar: `img/avatars/user0${getRandomPositiveInteger(1, 8)}.png`,
+  },
+  offer: {
+    title: getRandomArrayElement(TITLES),
+    address: `${LATITUDE}, ${LONGITUDE}`,
+    price: getRandomPositiveInteger(PRICE_OFFER_MIN, PRICE_OFFER_MAX),
+  },
+  type: getRandomArrayElement(TYPES),
+  rooms: getRandomPositiveInteger(NUMBER_OF_ROOMS_MIN, NUMBER_OF_ROOMS_MAX),
+  guests: getRandomPositiveInteger(NUMBER_OF_GUESTS_MIN, NUMBER_OF_GUESTS_MAX),
+  checkin: getRandomArrayElement(CHECKINS),
+  checkout: getRandomArrayElement(CHECKOUTS),
+  features: getRandomArray(FEATURES),
+  description: getRandomArray(DESCRIPTIONS),
+  photos: getRandomArray(PHOTOS),
+  location: {
+    lat: LATITUDE,
+    lng: LONGITUDE,
+  },
+});
+
+const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
+
+similarOffers;
 
