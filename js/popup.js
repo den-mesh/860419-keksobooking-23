@@ -5,23 +5,32 @@ const similarOfferTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const similarOffers = createOffer();
+let similarOffersCard = createOffer();
 const similarOfferFragment = document.createDocumentFragment();
 
+//сопоставляем типы жилья с подписями
+const offerTypes = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
 
-similarOffers.forEach(({author, offer}) => {
+
+similarOffersCard = ({author, offer}) => {
   const offerElement = similarOfferTemplate.cloneNode(true);
-  const popupFeautures = similarOffers.querySelector('.popup__features');
+  const popupFeautures = similarOffersCard.querySelector('.popup__features');
   const features = offer.features.map((feature) => `popup__feature--${feature}`);
-  const popupPhotos = similarOffers.querySelector('.popup__photos');
-  const popupTitle = similarOffers.querySelector('.popup__title');
-  const popupAddress = similarOffers.querySelector('.popup__text--address');
-  const popupPrice = similarOffers.querySelector('.popup__text--price');
-  const popupType = similarOffers.querySelector('.popup__type');
-  const popupCapacity = similarOffers.querySelector('.popup__text--capacity');
-  const popupTime = similarOffers.querySelector('.popup__text--time');
-  const popupDescription = similarOffers.querySelector('.popup__description');
-  const popupAvatar = similarOffers.querySelector('.popup__avatar');
+  const popupPhotos = similarOffersCard.querySelector('.popup__photos');
+  const popupTitle = similarOffersCard.querySelector('.popup__title');
+  const popupAddress = similarOffersCard.querySelector('.popup__text--address');
+  const popupPrice = similarOffersCard.querySelector('.popup__text--price');
+  const popupType = similarOffersCard.querySelector('.popup__type');
+  const popupCapacity = similarOffersCard.querySelector('.popup__text--capacity');
+  const popupTime = similarOffersCard.querySelector('.popup__text--time');
+  const popupDescription = similarOffersCard.querySelector('.popup__description');
+  const popupAvatar = similarOffersCard.querySelector('.popup__avatar');
 
   //проверка наличия данных
   const checkingDataAvailability = () => {
@@ -54,22 +63,6 @@ similarOffers.forEach(({author, offer}) => {
     }
   };
 
-  //сопоставляем типы жилья с подписями
-  const getTypeTranslate = (type) => {
-    switch (type) {
-      case 'palace' :
-        return 'Дворец';
-      case 'flat' :
-        return 'Квартира';
-      case 'house' :
-        return 'Дом';
-      case  'bungalow' :
-        return 'Бунгало';
-      case  'hotel' :
-        return 'Отель';
-    }
-  };
-
   popupTitle.textContent = offer.title;
   popupAddress.textContent = offer.address;
   popupPrice.textContent = offer.price;
@@ -83,7 +76,10 @@ similarOffers.forEach(({author, offer}) => {
   features.forEach(() => {
     popupFeautures.querySelectorAll('.popup__feature')
       .forEach((item) => {
-        const elementClass = item.classList[1];
+        const elementClassToString = item.classList.join('');
+        const elementClassIndex = elementClassToString.indexOf('—');
+        const elementClass = elementClassToString.substring(elementClassIndex + 2);
+
         if (!features.includes(elementClass)) {
           item.remove();
         }
@@ -117,7 +113,8 @@ similarOffers.forEach(({author, offer}) => {
   checkingDataAvailability();
   getPhotosListFragment();
   similarOfferFragment.appendChild(offerElement);
-});
+  mapCanvas.appendChild(similarOfferFragment.firstChild);
+};
 
 
-mapCanvas.appendChild(similarOfferFragment.firstChild);
+export {similarOffersCard};

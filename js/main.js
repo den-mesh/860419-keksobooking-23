@@ -1,8 +1,10 @@
 import {createOffer} from './data.js';
-import './popup';
+import {similarOffersCard} from './popup.js';
+import {checkValidityForm} from './form.js';
 
-const SIMILAR_OFFER_COUNT = 10;
+const SIMILAR_OFFER_COUNT = 1;
 const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
 
-similarOffers;
+similarOffersCard(similarOffers);
+checkValidityForm();
 
