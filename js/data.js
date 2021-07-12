@@ -1,4 +1,4 @@
-import {getRandomArray, getRandomArrayElement, getRandomPositiveFloat, getRandomPositiveInteger} from './util';
+import {getRandomArray, getRandomArrayElement, getRandomPositiveFloat, getRandomPositiveInteger} from './util.js';
 
 const TITLES = [
   'Промокод при бронировании',
@@ -98,4 +98,7 @@ const createOffer = () => ({
   },
 });
 
-export {createOffer};
+const SIMILAR_OFFER_COUNT = 1;
+const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
+
+export {createOffer, similarOffers};
