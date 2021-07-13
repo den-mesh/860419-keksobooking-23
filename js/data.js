@@ -101,4 +101,5 @@ const createOffer = () => ({
 const SIMILAR_OFFER_COUNT = 1;
 const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
 
+
 export {createOffer, similarOffers};
