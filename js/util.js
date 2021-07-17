@@ -1,3 +1,6 @@
+/* global _:readonly */
+const ALERT_SHOW_TIME = 5000;
+
 // Функция, возвращающая случайное целое положительное число из заданного диапазона
 
 const getRandomPositiveInteger = (min, max) => {
@@ -32,4 +35,43 @@ const getRandomArray = (arr) => {
   }
 };
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getRandomArray};
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const onPopupEscKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    closeUserModal();
+  }
+};
+
+const onPopupClick = () => {
+  closeUserModal();
+};
+
+
+const alertContainer = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+const errorMessage = document.querySelector('.error__message');
+const errorButton = document.querySelector('.error__button');
+
+function closeUserModal() {
+  alertContainer.remove();
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('click', onPopupClick);
+}
+
+const showAlert = () => {
+  errorMessage.textContent = 'Ошибка размещения объявления';
+  errorButton.addEventListener('click', () => {
+    closeUserModal();
+  });
+
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onPopupClick);
+
+  document.body.append(alertContainer);
+};
+
+
+export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getRandomArray, showAlert};
