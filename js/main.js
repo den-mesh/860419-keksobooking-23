@@ -1,11 +1,13 @@
-import {createOffer} from './data.js';
-import {similarOffersCard} from './popup.js';
-import {checkValidityForm} from './form.js';
-import {} from './map.js';
+import {SIMILAR_OFFER_COUNT} from './data.js';
+import './card.js';
+import {getData} from './api.js';
+import {renderSecondaryMarkers} from './map.js';
+import {setUserFormSubmit} from './form.js';
 
-const SIMILAR_OFFER_COUNT = 1;
-const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
 
-similarOffersCard(similarOffers);
-checkValidityForm();
+getData((data) => {
+  renderSecondaryMarkers(data.slice(0, SIMILAR_OFFER_COUNT));
+});
+
+setUserFormSubmit();
 

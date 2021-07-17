@@ -98,8 +98,14 @@ const createOffer = () => ({
   },
 });
 
-const SIMILAR_OFFER_COUNT = 1;
-const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
+const SIMILAR_OFFER_COUNT = 10;
+// const similarOffers = new Array(SIMILAR_OFFER_COUNT).fill(null).map(() => createOffer());
+
+const similarOffers = function (count) {
+  return new Array(count).fill(null).map(() => createOffer());
+};
+
+similarOffers(SIMILAR_OFFER_COUNT);
 
 
-export {createOffer, similarOffers};
+export {similarOffers, SIMILAR_OFFER_COUNT, createOffer, FEATURES};
